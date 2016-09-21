@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import sys
+from string_xor import string_xor
 
 def character_frequency(text):
     # Create an empty array of frequencies
@@ -39,6 +40,16 @@ def _main(args):
 
     with open(args[0]) as file:
         create_frequency_file(file.read())
+
+def best_xor(message, frequency_filename = 'freq.dat'):
+    best_key = -1
+    max_score = 0.0
+    for key in range(0, 256):
+        score = english_score(string_xor(message, key), frequency_filename)
+        if score > max_score:
+            max_score = score
+            best_key = key
+    return (max_score, best_key)
 
 if __name__ == '__main__':
     _main(sys.argv[1:])
