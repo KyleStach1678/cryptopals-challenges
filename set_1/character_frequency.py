@@ -28,10 +28,10 @@ def read_frequency_file(filename):
 
 def english_score(text, frequency_filename = 'freq.dat'):
     expected = read_frequency_file(frequency_filename)
-    ssd = 0
+    ssd = 0.0
     for ex, ac in zip(expected, character_frequency(text)):
         ssd += (ex - ac) ** 2.0
-    return 1 - ssd
+    return 1.0 - ssd
 
 def _main(args):
     if len(args) < 1:
@@ -42,10 +42,10 @@ def _main(args):
         create_frequency_file(file.read())
 
 def best_xor(message, frequency_filename = 'freq.dat'):
-    best_key = -1
+    best_key = 0
     max_score = 0.0
     for key in range(0, 256):
-        score = english_score(string_xor(message, key), frequency_filename)
+        score = english_score(string_xor(message, key).lower(), frequency_filename)
         if score > max_score:
             max_score = score
             best_key = key
